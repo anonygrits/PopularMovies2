@@ -12,14 +12,21 @@ import android.widget.TextView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     final private OnClickListener mOnClickListener;
-    private int mNumberItems;
+    private int mGridSize;
 
-    public RecyclerViewAdapter(int numberItems, OnClickListener listener) {
-        mNumberItems = numberItems;
+    // todo
+    public interface OnClickListener {
+        void onClick();
+    }
+
+    // constructor for adapter
+    public RecyclerViewAdapter(int gridSize, OnClickListener listener) {
+        mGridSize = gridSize;
         mOnClickListener = listener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
+    // set up viewholder for each grid item
+   class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         TextView title;
         ImageView thumbnail;
         TextView year;
@@ -33,12 +40,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             year = view.findViewById(R.id.tv_year);
             averageVote = view.findViewById(R.id.tv_avgVote);
             overview = view.findViewById(R.id.tv_overview);
-            view.setOnClickListener(this);
+            //view.setOnClickListener();
         }
 
         @Override
-        public void onClick(View view) {
-            mOnClickListener.onClick(view);
+        public void onClick() {
+            mOnClickListener.onClick();
         }
     }
 
@@ -61,6 +68,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         // todo: figure this out
-        return mNumberItems;
+        return 1;
     }
 }
