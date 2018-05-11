@@ -28,7 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // set up viewholder for each grid item
    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         TextView title;
-        ImageView thumbnail;
+        ImageView poster;
         TextView year;
         TextView averageVote;
         TextView overview;
@@ -36,11 +36,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.tv_title);
-            thumbnail = view.findViewById(R.id.iv_thumbnail);
+            poster = view.findViewById(R.id.iv_poster);
             year = view.findViewById(R.id.tv_year);
             averageVote = view.findViewById(R.id.tv_avgVote);
             overview = view.findViewById(R.id.tv_overview);
-            //view.setOnClickListener();
+            //todo view.setOnClickListener();
         }
 
         @Override

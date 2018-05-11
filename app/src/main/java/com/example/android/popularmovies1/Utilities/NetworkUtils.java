@@ -19,12 +19,12 @@ public final class NetworkUtils {
     // get movie list from API (adapted from Sunshine S02.01 Solution)
     public static String getMovieList(String movie_url, String api_key, String api) throws IOException {
         // build url inside this function but think about how to make a generic one to combine with thumbnail url builder
-        Uri thumbnailURI = Uri.parse(movie_url).buildUpon()
+        Uri movieListURI = Uri.parse(movie_url).buildUpon()
                 .appendQueryParameter(api_key,api)
                 .build();
         URL url = null;
         try {
-            url = new URL(thumbnailURI.toString());
+            url = new URL(movieListURI.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -49,18 +49,18 @@ public final class NetworkUtils {
     }
 
     // build thumbnail URL
-    private static final String THUMBNAIL_BASE_URL="http://image.tmdb.org/t/p/";
-    private static final String THUMBNAIL_SIZE="w185";
+    private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/";
+    private static final String POSTER_SIZE="w185";
     final static String MOVIE_ID="movie_id";
 
-    public static URL buildThumbnailURL(String movie_id) {
-        Uri thumbnailURI = Uri.parse(THUMBNAIL_BASE_URL).buildUpon()
-                .appendPath(THUMBNAIL_SIZE)
+    public static URL buildPosterURL(String movie_id) {
+        Uri posterURI = Uri.parse(POSTER_BASE_URL).buildUpon()
+                .appendPath(POSTER_SIZE)
                 .appendQueryParameter(MOVIE_ID,movie_id)
                 .build();
         URL url = null;
         try {
-            url = new URL(thumbnailURI.toString());
+            url = new URL(posterURI.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
