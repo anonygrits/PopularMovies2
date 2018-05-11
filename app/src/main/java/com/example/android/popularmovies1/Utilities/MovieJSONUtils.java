@@ -20,6 +20,10 @@ public final class MovieJSONUtils {
             String release_year = release_date;
             String vote_average = movieData.optString("vote_average");
             String overview = movieData.optString("overview");
+
+            // todo put into some kind of object
         }
+
+        // todo figure out what object to return
     }
 }
