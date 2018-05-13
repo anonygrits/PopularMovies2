@@ -4,8 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public final class MovieJSONUtils {
-    public static JSONArray movieArray(String movieString) throws JSONException {
+    public static void movieArray(String movieString) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieString);
         JSONArray movieArray = new JSONArray(movieJSON.getJSONArray("results"));
 
@@ -17,7 +20,9 @@ public final class MovieJSONUtils {
             String title = movieData.optString("title");
             String release_date = movieData.optString("release_date");
             // todo turn release_date into release_year
-            String release_year = release_date;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+            LocalDate localDate = LocalDate.parse(release_date, formatter);
+            String release_year = Integer.toString(localDate.getYear());
             String vote_average = movieData.optString("vote_average");
             String overview = movieData.optString("overview");
 
