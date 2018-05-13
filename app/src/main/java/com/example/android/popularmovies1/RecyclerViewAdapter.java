@@ -8,38 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     final private OnClickListener mOnClickListener;
-    private int mGridSize;
+    private List<Movie> mMovies;
 
     // todo
     public interface OnClickListener {
         void onClick();
     }
 
-    // constructor for adapter
-    public RecyclerViewAdapter(int gridSize, OnClickListener listener) {
-        mGridSize = gridSize;
-        mOnClickListener = listener;
-    }
-
     // set up viewholder for each grid item
-   class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        TextView title;
-        ImageView poster;
-        TextView year;
-        TextView averageVote;
-        TextView overview;
+    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
+        ImageView thumbnail;
 
         public ViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.tv_title);
-            poster = view.findViewById(R.id.iv_poster);
-            year = view.findViewById(R.id.tv_year);
-            averageVote = view.findViewById(R.id.tv_avgVote);
-            overview = view.findViewById(R.id.tv_overview);
+            thumbnail = view.findViewById(R.id.iv_poster);
             //todo view.setOnClickListener();
         }
 
@@ -49,25 +36,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
+    // constructor for adapter
+    public RecyclerViewAdapter(List movies, OnClickListener listener) {
+        mMovies = movies;
+        mOnClickListener = listener;
+    }
+
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // todo: figure this out
-        return null;
+        // inflate imageView for thumbnail
+        View movieView = inflater.inflate(R.layout.movie_grid_item, parent, false);
+
+        // return new viewholder
+        ViewHolder viewHolder = new ViewHolder(movieView);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        // todo: figure this out
-        return ;
+        Movie movie = mMovies.get(position);
+
+        ImageView thumbnailView = holder.thumbnail;
+        // todo set image on thumbnailView
     }
 
     @Override
     public int getItemCount() {
-        // todo: figure this out
-        return 1;
+        return mMovies.size();
     }
 }
