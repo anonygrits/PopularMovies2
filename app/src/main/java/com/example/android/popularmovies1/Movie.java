@@ -17,6 +17,9 @@ public class Movie {
         mPoster_path = poster_path;
         mTitle = title;
         mRelease_date = release_date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        LocalDate localDate = LocalDate.parse(mRelease_date, formatter);
+        mRelease_year = Integer.toString(localDate.getYear());
         mVote_average = vote_average;
         mOverview = overview;
     }
@@ -34,9 +37,6 @@ public class Movie {
     }
 
     public String getRelease_year() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-        LocalDate localDate = LocalDate.parse(mRelease_date, formatter);
-        mRelease_year = Integer.toString(localDate.getYear());
         return mRelease_year;
     }
 
