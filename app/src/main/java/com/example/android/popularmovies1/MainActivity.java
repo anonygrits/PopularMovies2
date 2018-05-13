@@ -1,15 +1,17 @@
 package com.example.android.popularmovies1;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnClickListener {
-    private static final int NUM_LIST_ITEMS=10;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    private static final List<Movie> mMovies = new ArrayList<>();
 
     private RecyclerViewAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // todo: initialize movies list
+
 
         // get reference to RecyclerView in xml
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         mRecyclerView.setHasFixedSize(true);
 
         // set up adapter to display each item in grid
-        mAdapter = new RecyclerViewAdapter(NUM_LIST_ITEMS,this);
+        mAdapter = new RecyclerViewAdapter(mMovies);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -49,9 +54,4 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         return super.onOptionsItemSelected(item);
     }
 
-    // todo figure out how to make click on thumbnail go to movie details (intent?)
-    @Override
-    public void onClick() {
-
-    }
 }

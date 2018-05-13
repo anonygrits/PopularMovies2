@@ -11,35 +11,33 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
-    final private OnClickListener mOnClickListener;
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<Movie> mMovies;
 
-    // todo
-    public interface OnClickListener {
-        void onClick();
-    }
-
     // set up viewholder for each grid item
-    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        ImageView thumbnail;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView thumbnail;
+        private Context context;
 
-        public ViewHolder(View view) {
+        public ViewHolder(Context context, View view) {
             super(view);
             thumbnail = view.findViewById(R.id.iv_poster);
-            //todo view.setOnClickListener();
+
+            this.context = context;
+            view.setOnClickListener(this);
         }
 
         @Override
-        public void onClick() {
-            mOnClickListener.onClick();
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+
+            // todo: figure out how to go to DetailActivity onClick
         }
     }
 
     // constructor for adapter
-    public RecyclerViewAdapter(List movies, OnClickListener listener) {
+    public RecyclerViewAdapter(List movies) {
         mMovies = movies;
-        mOnClickListener = listener;
     }
 
     @NonNull
@@ -52,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View movieView = inflater.inflate(R.layout.movie_grid_item, parent, false);
 
         // return new viewholder
-        ViewHolder viewHolder = new ViewHolder(movieView);
+        ViewHolder viewHolder = new ViewHolder(context, movieView);
         return viewHolder;
     }
 
