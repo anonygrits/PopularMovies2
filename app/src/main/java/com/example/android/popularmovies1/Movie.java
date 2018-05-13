@@ -1,5 +1,8 @@
 package com.example.android.popularmovies1;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Movie {
     private String mId;
     private String mPoster_path;
@@ -18,28 +21,30 @@ public class Movie {
         mOverview = overview;
     }
 
-    public String getmId() {
+    public String getId() {
         return mId;
     }
 
-    public String getmPoster_path() {
+    public String getPoster_path() {
         return mPoster_path;
     }
 
-    public String getmTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
-    public String getmRelease_year() {
-        // todo get year from date
-        return mRelease_date;
+    public String getRelease_year() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        LocalDate localDate = LocalDate.parse(mRelease_date, formatter);
+        mRelease_year = Integer.toString(localDate.getYear());
+        return mRelease_year;
     }
 
-    public String getmVote_average() {
+    public String getVote_average() {
         return mVote_average;
     }
 
-    public String getmOverview() {
+    public String getOverview() {
         return mOverview;
     }
 }

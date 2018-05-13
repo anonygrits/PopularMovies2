@@ -19,9 +19,6 @@ public final class MovieJSONUtils {
             String poster_path = movieData.optString("poster_path");
             String title = movieData.optString("title");
             String release_date = movieData.optString("release_date");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-            LocalDate localDate = LocalDate.parse(release_date, formatter);
-            String release_year = Integer.toString(localDate.getYear());
             String vote_average = movieData.optString("vote_average");
             String overview = movieData.optString("overview");
 

@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Movie movie = mMovies.get(position);
 
         ImageView thumbnailView = holder.thumbnail;
-        Picasso.with(mContext).load(movie.getmPoster_path()).into(thumbnailView);
+        Picasso.with(mContext).load(movie.getPoster_path()).into(thumbnailView);
     }
 
     @Override
