@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<Movie> mMovies;
+    private Context mContext;
 
     // set up viewholder for each grid item
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -59,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Movie movie = mMovies.get(position);
 
         ImageView thumbnailView = holder.thumbnail;
-        // todo set image on thumbnailView
+        Picasso.with(mContext).load(movie.getmPoster_path()).into(thumbnailView);
     }
 
     @Override
