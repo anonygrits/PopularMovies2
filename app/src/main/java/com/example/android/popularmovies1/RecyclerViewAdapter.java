@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -17,16 +16,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Movie> mMovies;
     private Context mContext;
 
+    // constructor for adapter
+    public RecyclerViewAdapter(Context context, List movies) {
+        mContext = context;
+        mMovies = movies;
+    }
+
     // set up viewholder for each grid item
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView thumbnail;
-        private Context context;
+        public ImageView mThumbnailView;
+        private Context mContext;
 
-        public ViewHolder(Context context, View view) {
+        public ViewHolder(View view) {
             super(view);
-            thumbnail = view.findViewById(R.id.iv_poster);
+            mThumbnailView = view.findViewById(R.id.iv_poster);
 
-            this.context = context;
+            mContext = view.getContext();
             view.setOnClickListener(this);
         }
 
@@ -36,11 +41,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             // todo: figure out how to go to DetailActivity onClick
         }
-    }
-
-    // constructor for adapter
-    public RecyclerViewAdapter(List movies) {
-        mMovies = movies;
     }
 
     @NonNull
@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View movieView = inflater.inflate(R.layout.movie_grid_item, parent, false);
 
         // return new viewholder
-        ViewHolder viewHolder = new ViewHolder(context, movieView);
+        ViewHolder viewHolder = new ViewHolder(movieView);
         return viewHolder;
     }
 
@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
 
-        ImageView thumbnailView = holder.thumbnail;
+        ImageView thumbnailView = holder.mThumbnailView;
         Picasso.with(mContext).load(movie.getPoster_path()).into(thumbnailView);
     }
 

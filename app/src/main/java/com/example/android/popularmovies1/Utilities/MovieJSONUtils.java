@@ -4,9 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public final class MovieJSONUtils {
     public static void movieArray(String movieString) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieString);
