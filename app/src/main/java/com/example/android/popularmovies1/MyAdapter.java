@@ -14,33 +14,25 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Movie> mMovies;
-    private Context mContext;
+    private Context mContext;  // todo figure out how to get context to picasso
 
     // constructor for adapter
-    public MyAdapter(Context context, List movies) {
-        mContext = context;
+    public MyAdapter(List movies) {
         mMovies = movies;
     }
 
     // set up viewholder for each grid item
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mThumbnailView;
-        private Context mContext;
 
         public ViewHolder(View view) {
             super(view);
             mThumbnailView = view.findViewById(R.id.iv_poster);
 
-            mContext = view.getContext();
             view.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-
             // todo: figure out how to go to DetailActivity onClick
-        }
     }
 
     @NonNull
@@ -64,6 +56,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         ImageView thumbnailView = holder.mThumbnailView;
         Picasso.with(mContext).load(movie.getPoster_path()).into(thumbnailView);
     }
+
+    // todo figure out how to call notifyItemChanged() when switching lists
 
     @Override
     public int getItemCount() {
