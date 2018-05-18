@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 return moviesArrayList;
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
+                return new ArrayList<>();  // todo figure out what to do if this happens
             }
         }
 
