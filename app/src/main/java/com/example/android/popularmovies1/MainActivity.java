@@ -13,9 +13,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final List<Movie> mMovies = new ArrayList<>();
 
-    private RecyclerViewAdapter mAdapter;
     private RecyclerView mRecyclerView;
-
+    private RecyclerViewAdapter mAdapter;
+    private GridLayoutManager mGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
         // get reference to RecyclerView in xml
         mRecyclerView = findViewById(R.id.recyclerview);
 
-        // set up grid layout manager
-        int numberColumns = 2;  // move this somewhere later?
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, numberColumns);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-
         // changes in content don't change child layout size (performance)
         mRecyclerView.setHasFixedSize(true);
+
+        // set up grid layout manager
+        int numberColumns = 2;  // todo move this somewhere later?
+        mGridLayoutManager = new GridLayoutManager(this, numberColumns);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         // set up adapter to display each item in grid
         mAdapter = new RecyclerViewAdapter(mMovies);

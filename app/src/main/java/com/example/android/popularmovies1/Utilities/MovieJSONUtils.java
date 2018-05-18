@@ -1,8 +1,12 @@
 package com.example.android.popularmovies1.Utilities;
 
+import android.content.ContentValues;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.android.popularmovies1.Movie;
 
 public final class MovieJSONUtils {
     public static void movieArray(String movieString) throws JSONException {
@@ -19,9 +23,10 @@ public final class MovieJSONUtils {
             String vote_average = movieData.optString("vote_average");
             String overview = movieData.optString("overview");
 
-            // todo put into some kind of object
-        }
+            // make movie object
+            Movie movie = new Movie(id,poster_path,title,release_date,vote_average,overview);
 
-        // todo figure out what object to return
+            // todo put movie object somewhere
+        }
     }
 }
