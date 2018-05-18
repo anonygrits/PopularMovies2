@@ -28,9 +28,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             mThumbnailView = view.findViewById(R.id.iv_poster);
-
-            view.setOnClickListener(this);
-        }
+            }
 
             // todo: figure out how to go to DetailActivity onClick
     }
