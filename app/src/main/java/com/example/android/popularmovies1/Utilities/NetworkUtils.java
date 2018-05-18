@@ -10,17 +10,11 @@ import java.net.URL;
 import java.util.Scanner;
 
 public final class NetworkUtils {
-    private final String POPULAR_MOVIES_URL="https://api.themoviedb.org/3/movie/popular?";
-    private final String TOP_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
-
-    private static String API_KEY="api_key";
-
-
     // get movie list from API (adapted from Sunshine S02.01 Solution)
-    public static String getMovieList(String movie_url, String api_key, String api) throws IOException {
+    public static String getMovieList(String movie_url, String api_key_tag, String api) throws IOException {
         // build url inside this function but think about how to make a generic one to combine with thumbnail url builder
         Uri movieListURI = Uri.parse(movie_url).buildUpon()
-                .appendQueryParameter(api_key,api)
+                .appendQueryParameter(api_key_tag,api)
                 .build();
         URL url = null;
         try {

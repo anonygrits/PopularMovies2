@@ -10,14 +10,15 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private List<Movie> mMovies;
+    private ArrayList<Movie> mMovies;
     private Context mContext;  // todo figure out how to get context to picasso
 
     // constructor for adapter
-    public MyAdapter(List movies) {
+    public MyAdapter(ArrayList movies) {
         mMovies = movies;
     }
 
