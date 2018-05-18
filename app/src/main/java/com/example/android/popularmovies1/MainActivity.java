@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private static final List<Movie> mMovies = new ArrayList<>();
 
     private RecyclerView mRecyclerView;
-    private RecyclerViewAdapter mAdapter;
+    private MyAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         // set up adapter to display each item in grid
-        mAdapter = new RecyclerViewAdapter(mMovies);
+        mAdapter = new MyAdapter(mMovies);
         mRecyclerView.setAdapter(mAdapter);
     }
 

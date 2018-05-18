@@ -1,7 +1,5 @@
 package com.example.android.popularmovies1.Utilities;
 
-import android.content.ContentValues;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

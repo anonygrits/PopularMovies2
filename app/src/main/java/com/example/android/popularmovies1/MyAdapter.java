@@ -12,12 +12,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Movie> mMovies;
     private Context mContext;
 
     // constructor for adapter
-    public RecyclerViewAdapter(Context context, List movies) {
+    public MyAdapter(Context context, List movies) {
         mContext = context;
         mMovies = movies;
     }
@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
 
         ImageView thumbnailView = holder.mThumbnailView;
