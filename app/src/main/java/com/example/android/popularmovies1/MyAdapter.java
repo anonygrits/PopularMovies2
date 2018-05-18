@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.android.popularmovies1.Utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Movie movie = mMovies.get(position);
 
         ImageView thumbnailView = holder.mThumbnailView;
-        Picasso.with(mContext).load(movie.getPoster_path()).into(thumbnailView);
+        String posterURL = NetworkUtils.buildPosterURLString(movie.getPoster_path());
+        Picasso.with(mContext).load(posterURL).into(thumbnailView);
     }
 
     @Override

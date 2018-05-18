@@ -43,11 +43,13 @@ public final class NetworkUtils {
     }
 
     // build thumbnail URL
+    // todo consider if this is best place for this code
+    // todo is there a better way to build this string?
     private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE="w185";
     final static String MOVIE_ID="movie_id";
 
-    public static URL buildPosterURL(String movie_id) {
+    public static String buildPosterURLString(String movie_id) {
         Uri posterURI = Uri.parse(POSTER_BASE_URL).buildUpon()
                 .appendPath(POSTER_SIZE)
                 .appendQueryParameter(MOVIE_ID,movie_id)
@@ -58,6 +60,6 @@ public final class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return url;
+        return url.toString();
     }
 }
