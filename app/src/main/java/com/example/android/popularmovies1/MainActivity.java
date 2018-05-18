@@ -6,19 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> mMovies = new ArrayList<>();
     private final String POPULAR_MOVIES_URL="https://api.themoviedb.org/3/movie/popular?";
-    private final String TOP_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
+    private final String TOP_RATED_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
 
     private static String API_KEY_TAG="api_key";
 
@@ -34,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get movies list
-        // todo use default ordering for now
+        // get movies list (default ordering is by popularity)
         new FetchMovieListTask().execute(POPULAR_MOVIES_URL);
 
         // get reference to RecyclerView in xml
@@ -76,16 +74,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // todo: to give options for sort order
-    // todo setup menu xml
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movie_ordering, menu);
+        return true;
     }
 
-    // todo: take action for sort order
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.popular_movies) {
+            new FetchMovieListTask().execute(POPULAR_MOVIES_URL);
+            mAdapter.notifyDataSetChanged();
+            return true;
+        } else if (id == R.id.top_rated_movies) {
+            new FetchMovieListTask().execute(TOP_RATED_MOVIES_URL);
+            mAdapter.notifyDataSetChanged();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

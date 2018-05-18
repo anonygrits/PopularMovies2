@@ -56,8 +56,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Picasso.with(mContext).load(movie.getPoster_path()).into(thumbnailView);
     }
 
-    // todo figure out how to call notifyItemChanged() when switching lists
-
     @Override
     public int getItemCount() {
         return mMovies.size();
