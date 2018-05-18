@@ -35,7 +35,7 @@ public class Movie {
         return mTitle;
     }
 
-    public Void setRelease_year(String release_date) {
+    public void setRelease_year(String release_date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
         LocalDate localDate = LocalDate.parse(release_date, formatter);
         mRelease_year = Integer.toString(localDate.getYear());
@@ -45,7 +45,7 @@ public class Movie {
         return mRelease_year;
     }
 
-    public Void setVote_average(String vote_average) {
+    public void setVote_average(String vote_average) {
         mVote_average = vote_average;
     }
 
@@ -53,7 +53,7 @@ public class Movie {
         return mVote_average;
     }
 
-    public Void setOverview(String overview) {
+    public void setOverview(String overview) {
         mOverview = overview;
     }
 

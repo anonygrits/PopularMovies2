@@ -6,8 +6,12 @@ import org.json.JSONObject;
 
 import com.example.android.popularmovies1.Movie;
 
+import java.util.ArrayList;
+
 public final class MovieJSONUtils {
-    public static void movieArray(String movieString) throws JSONException {
+    public static ArrayList getMovieArrayList(String movieString) throws JSONException {
+        ArrayList<Movie> movieArrayList = new ArrayList<>();
+
         JSONObject movieJSON = new JSONObject(movieString);
         JSONArray movieArray = new JSONArray(movieJSON.getJSONArray("results"));
 
@@ -22,9 +26,19 @@ public final class MovieJSONUtils {
             String overview = movieData.optString("overview");
 
             // make movie object
-            Movie movie = new Movie(id,poster_path,title,release_date,vote_average,overview);
+            Movie movie = new Movie();
 
-            // todo put movie object somewhere
+            movie.setId(id);
+            movie.setPoster_path(poster_path);
+            movie.setTitle(title);
+            movie.setRelease_year(release_date);
+            movie.setVote_average(vote_average);
+            movie.setOverview(overview);
+
+            // add movie to arrayList
+            movieArrayList.add(movie);
         }
+
+        return movieArrayList;
     }
 }
