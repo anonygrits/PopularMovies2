@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static String API_KEY_TAG="api_key";
 
-    // todo remove before commiting to github!
-    private static String API = "";
+    // put private API key here
+    private static String API = "";      // todo remove before commiting to github!
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // set up grid layout manager
-        int numberColumns = 2;  // todo move this somewhere later?
+        int numberColumns = 2;  // todo make adaptive to screen size
         mGridLayoutManager = new GridLayoutManager(this, numberColumns);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
@@ -93,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
             new FetchMovieListTask().execute(TOP_RATED_MOVIES_URL);
             mAdapter.notifyDataSetChanged();
             return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        } else return super.onOptionsItemSelected(item);
     }
 
 }

@@ -17,7 +17,6 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<Movie> mMovies;
-    private Context mContext;  // todo figure out how to get context to picasso
 
     // constructor for adapter
     public MyAdapter(ArrayList movies) {
@@ -56,7 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         ImageView thumbnailView = holder.mThumbnailView;
         String posterURL = NetworkUtils.buildPosterURLString(movie.getPoster_path());
-        Picasso.with(mContext).load(posterURL).into(thumbnailView);
+        Picasso.with(thumbnailView.getContext()).load(posterURL).into(thumbnailView);
     }
 
     @Override
