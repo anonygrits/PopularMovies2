@@ -26,8 +26,7 @@ public class DetailActivity extends AppCompatActivity {
         mAverageVoteView = findViewById(R.id.tv_avgVote);
         mOverviewView = findViewById(R.id.tv_overview);
 
-        // get intent & check position (borrowed from Sandwich code)
-        // todo: reference origin code correctly
+        // get intent & check position
         Intent intent = getIntent();
         if (intent == null) {
             closeOnError();
@@ -47,12 +46,9 @@ public class DetailActivity extends AppCompatActivity {
         // todo: setTitle(movie.getTitle())
     }
 
-    // show error toast if movie is missing (borrowed from Sandwich code)
-    // todo: reference origin code correctly
+    // show error toast if movie is missing
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.missing_movie_message, Toast.LENGTH_SHORT).show();
     }
-
-
 }
