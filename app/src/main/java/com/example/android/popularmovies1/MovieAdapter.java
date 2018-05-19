@@ -2,42 +2,50 @@ package com.example.android.popularmovies1;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.content.Context;
+import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.View.OnClickListener;
+
+import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
-import com.squareup.picasso.Picasso;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<Movie> mMovies;
+    private final MovieOnClickHandler mClickHandler;
 
+    public interface MovieOnClickHandler {
+        void onClick(Movie movie);
+    }
     // constructor for adapter
-    public MyAdapter(ArrayList movies) {
+    public MovieAdapter(ArrayList movies, MovieOnClickHandler handler) {
         mMovies = movies;
+        mClickHandler = handler;
     }
 
     // set up viewholder for each grid item
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         public ImageView mThumbnailView;
 
-        public ViewHolder(View view) {
+        public MovieViewHolder(View view) {
             super(view);
             mThumbnailView = view.findViewById(R.id.iv_poster);
+            view.setOnClickListener(this);
             }
-
-            // todo: figure out how to go to DetailActivity onClick
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            Movie movie = mMovies.get(adapterPosition);
+            mClickHandler.onClick(movie);
+        }
     }
 
     @NonNull
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MovieAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -45,12 +53,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         View movieView = inflater.inflate(R.layout.movie_grid_item, parent, false);
 
         // return new viewholder
-        ViewHolder viewHolder = new ViewHolder(movieView);
+        MovieViewHolder viewHolder = new MovieViewHolder(movieView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
 
         ImageView thumbnailView = holder.mThumbnailView;
@@ -60,6 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (mMovies == null) return 0;
         return mMovies.size();
     }
 }

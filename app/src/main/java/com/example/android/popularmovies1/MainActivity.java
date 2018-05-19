@@ -16,7 +16,7 @@ import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
 import org.json.JSONException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickHandler {
     private ArrayList<Movie> mMovies = new ArrayList<>();
     private final String POPULAR_MOVIES_URL="https://api.themoviedb.org/3/movie/popular?";
     private final String TOP_RATED_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static String API = "";      // todo remove before committing to github!
 
     private RecyclerView mRecyclerView;
-    private MyAdapter mAdapter;
+    private MovieAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
 
     @Override
@@ -50,8 +50,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         // set up adapter to display each item in grid
-        mAdapter = new MyAdapter(mMovies);
+        mAdapter = new MovieAdapter(mMovies, this);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onClick(Movie movie) {
+        return;  // todo figure out what to do here
     }
 
     public class FetchMovieListTask extends AsyncTask<String, Void, String> {
