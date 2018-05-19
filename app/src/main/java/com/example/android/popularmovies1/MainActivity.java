@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
+import org.json.JSONException;
+
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> mMovies = new ArrayList<>();
     private final String POPULAR_MOVIES_URL="https://api.themoviedb.org/3/movie/popular?";
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static String API_KEY_TAG="api_key";
 
     // put private API key here
-    private static String API = "";      // todo remove before commiting to github!
+    private static String API = "";      // todo remove before committing to github!
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -52,25 +54,29 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public class FetchMovieListTask extends AsyncTask<String, Void, ArrayList<Movie>> {
+    public class FetchMovieListTask extends AsyncTask<String, Void, String> {
         @Override
-        protected ArrayList<Movie> doInBackground(String... urls) {
+        protected String doInBackground(String... urls) {
             if (urls.length == 0) return null;
 
             String movieListURL = urls[0];
             try {
                 String moviesListJSON = NetworkUtils.getMovieList(movieListURL,API_KEY_TAG,API);
-                ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-                return moviesArrayList;
+                return moviesListJSON;
             } catch (Exception e) {
                 e.printStackTrace();
-                return new ArrayList<>();  // todo figure out what to do if this happens
+                return null;  // todo figure out what to do if this happens
             }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Movie> movies) {
-            mMovies = movies;
+        protected void onPostExecute(String moviesListJSON) {
+            try {
+                ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
+                mMovies = moviesArrayList;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
