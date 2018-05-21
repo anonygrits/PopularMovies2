@@ -1,15 +1,38 @@
 package com.example.android.popularmovies1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Movie {
+public class Movie implements Parcelable {
+    // Parcelable pattern taken from http://www.vogella.com/tutorials/AndroidParcelable/article.html
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Movie createFromParcel(Parcel fromParcel) {
+            return new Movie(fromParcel);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
     private String mId;
     private String mPoster_path;
     private String mTitle;
     private String mRelease_year;
     private String mVote_average;
     private String mOverview;
+
+    public Movie(String id, String poster_path, String title, String release_date, String vote_average, String overview) {
+        mId = id;
+        mPoster_path = poster_path;
+        mTitle = title;
+        mRelease_year = getYearFromDate(release_date);
+        mVote_average = vote_average;
+        mOverview = overview;
+    }
 
     public void setId(String id) {
         mId = id;
@@ -36,9 +59,7 @@ public class Movie {
     }
 
     public void setRelease_year(String release_date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-        LocalDate localDate = LocalDate.parse(release_date, formatter);
-        mRelease_year = Integer.toString(localDate.getYear());
+        mRelease_year = getYearFromDate(release_date);
     }
 
     public String getRelease_year() {
@@ -61,4 +82,47 @@ public class Movie {
         return mOverview;
     }
 
+    private String getYearFromDate(String release_date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        LocalDate localDate = LocalDate.parse(release_date, formatter);
+        String year = Integer.toString(localDate.getYear());
+        return year;
+    }
+
+    public Movie(Parcel fromParcel) {
+        this.mId = fromParcel.readString();
+        this.mPoster_path = fromParcel.readString();
+        this.mTitle = fromParcel.readString();
+        this.mRelease_year = fromParcel.readString();
+        this.mVote_average = fromParcel.readString();
+        this.mOverview = fromParcel.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel toParcel, int flags) {
+        toParcel.writeString(this.mId);
+        toParcel.writeString(this.mPoster_path);
+        toParcel.writeString(this.mTitle);
+        toParcel.writeString(this.mRelease_year);
+        toParcel.writeString(this.mVote_average);
+        toParcel.writeString(this.mOverview);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // todo is this necessary?
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + mId + '\'' +
+                ",poster_path='" + mPoster_path + '\'' +
+                ",title='" + mTitle + '\'' +
+                ",release_year='" + mRelease_year + '\'' +
+                ",vote_average='" + mVote_average + '\'' +
+                ",overview='" + mOverview + '\'' +
+                '}';
+    }
 }
