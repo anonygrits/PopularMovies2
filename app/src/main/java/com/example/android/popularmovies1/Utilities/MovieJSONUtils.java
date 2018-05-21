@@ -26,14 +26,7 @@ public final class MovieJSONUtils {
             String overview = movieData.optString("overview");
 
             // make movie object
-            Movie movie = new Movie();
-
-            movie.setId(id);
-            movie.setPoster_path(poster_path);
-            movie.setTitle(title);
-            movie.setRelease_year(release_date);
-            movie.setVote_average(vote_average);
-            movie.setOverview(overview);
+            Movie movie = new Movie(id,poster_path,title,release_date,vote_average,overview);
 
             // add movie to arrayList
             movieArrayList.add(movie);

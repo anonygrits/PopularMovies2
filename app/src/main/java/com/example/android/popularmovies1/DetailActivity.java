@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies1.Utilities.NetworkUtils;
+import com.squareup.picasso.Picasso;
+
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
@@ -28,27 +31,23 @@ public class DetailActivity extends AppCompatActivity {
 
         // get intent & check position
         Intent intent = getIntent();
-        if (intent == null) {
-            closeOnError();
+        if (intent != null) {
+            if (intent.hasExtra("movie")) {
+                Movie movie = intent.getExtras().getParcelable("movie");
+
+                // set views
+                mYearView.setText(movie.getRelease_year());
+                mAverageVoteView.setText(movie.getRelease_year());
+                mAverageVoteView.setText(movie.getVote_average());
+                mOverviewView.setText(movie.getOverview());
+
+                // todo also in MovieAdapter - figure out where to put this in final code
+                String posterURL = NetworkUtils.buildPosterURLString(movie.getPoster_path());
+                Picasso.with(mPosterView.getContext()).load(posterURL).into(mPosterView);
+
+                // set title
+                setTitle(movie.getTitle());
+            }
         }
-
-        int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
-        if (position == DEFAULT_POSITION) {
-            // EXTRA_POSITION not found in intent
-            closeOnError();
-            return;
-        }
-
-        // todo: get movies list
-
-        // todo: populate views
-
-        // todo: setTitle(movie.getTitle())
-    }
-
-    // show error toast if movie is missing
-    private void closeOnError() {
-        finish();
-        Toast.makeText(this, R.string.missing_movie_message, Toast.LENGTH_SHORT).show();
     }
 }

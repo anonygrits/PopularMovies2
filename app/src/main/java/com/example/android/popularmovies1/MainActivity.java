@@ -1,7 +1,10 @@
 package com.example.android.popularmovies1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +59,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public void onClick(Movie movie) {
-        return;  // todo figure out what to do here
+        Context context = this;
+        Class destinationClass = DetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        intentToStartDetailActivity.putExtra("movie",new Movie(movie.getId(),movie.getPoster_path(),movie.getTitle(),movie.getRelease_year(),movie.getVote_average(),movie.getOverview()));
+        startActivity(intentToStartDetailActivity);
     }
 
     public class FetchMovieListTask extends AsyncTask<String, Void, String> {
