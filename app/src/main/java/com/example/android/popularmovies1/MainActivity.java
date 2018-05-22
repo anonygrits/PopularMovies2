@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         try {
             String moviesListJSON  = new  FetchMovieListTask().execute(url).get();
             ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-            mMovies = moviesArrayList;
+            mMovies.clear();
+            mMovies.addAll(moviesArrayList);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -104,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     // todo figure out how to save settings
-    // todo figure out why data is not refreshing
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
