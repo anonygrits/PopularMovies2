@@ -1,5 +1,7 @@
 package com.example.android.popularmovies1.Utilities;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +15,7 @@ public final class MovieJSONUtils {
         ArrayList<Movie> movieArrayList = new ArrayList<>();
 
         JSONObject movieJSON = new JSONObject(movieString);
-        JSONArray movieArray = new JSONArray(movieJSON.getJSONArray("results"));
+        JSONArray movieArray = movieJSON.getJSONArray("results");
 
         for (int i = 0; i < movieArray.length(); i++) {
             JSONObject movieData = movieArray.getJSONObject(i);

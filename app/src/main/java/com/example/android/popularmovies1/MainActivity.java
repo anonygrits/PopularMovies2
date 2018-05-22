@@ -8,11 +8,13 @@ import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
@@ -39,7 +41,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         // get movies list (default ordering is by popularity)
-        new FetchMovieListTask().execute(POPULAR_MOVIES_URL);
+        // todo clean this up
+        try {
+            String moviesListJSON  = new  FetchMovieListTask().execute(POPULAR_MOVIES_URL).get();
+            ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
+            mMovies = moviesArrayList;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // get reference to RecyclerView in xml
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -81,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
 
+        // todo remove this? see above...
         @Override
         protected void onPostExecute(String moviesListJSON) {
             try {

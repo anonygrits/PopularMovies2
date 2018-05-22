@@ -1,6 +1,7 @@
 package com.example.android.popularmovies1.Utilities;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,19 +48,8 @@ public final class NetworkUtils {
     // todo is there a better way to build this string?
     private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE="w185";
-    final static String MOVIE_ID="movie_id";
 
-    public static String buildPosterURLString(String movie_id) {
-        Uri posterURI = Uri.parse(POSTER_BASE_URL).buildUpon()
-                .appendPath(POSTER_SIZE)
-                .appendQueryParameter(MOVIE_ID,movie_id)
-                .build();
-        URL url = null;
-        try {
-            url = new URL(posterURI.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return url.toString();
+    public static String buildPosterURLString(String poster_path) {
+        return POSTER_BASE_URL+POSTER_SIZE+'/'+poster_path;
     }
 }
