@@ -1,7 +1,6 @@
 package com.example.android.popularmovies1.Utilities;
 
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +44,6 @@ public final class NetworkUtils {
 
     // build thumbnail URL
     // todo consider if this is best place for this code
-    // todo is there a better way to build this string?
     private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE="w185";
 

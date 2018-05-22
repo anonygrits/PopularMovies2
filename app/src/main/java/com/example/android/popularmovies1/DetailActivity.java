@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
-import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";

@@ -2,5 +2,4 @@
     <string name="app_name">PopularMovies1</string>
     <string name="popular_movies">Sort by popularity</string>
     <string name="top_rated_movies">Sort by ratings</string>
-    <string name="missing_movie_message">movie not found</string>
 </resources>

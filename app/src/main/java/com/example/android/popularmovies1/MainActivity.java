@@ -4,22 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import org.json.JSONException;
 
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
-
-import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickHandler {
     private ArrayList<Movie> mMovies = new ArrayList<>();
@@ -41,18 +38,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         // get movies list (default ordering is by popularity)
-        // todo clean this up
-        try {
-            String moviesListJSON  = new  FetchMovieListTask().execute(POPULAR_MOVIES_URL).get();
-            ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-            mMovies = moviesArrayList;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        // note: tried to put this in onPostExecute() but could not set mMovie - revisit when time
+        setmMovies(POPULAR_MOVIES_URL);
 
         // get reference to RecyclerView in xml
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -86,23 +73,26 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             String movieListURL = urls[0];
             try {
-                String moviesListJSON = NetworkUtils.getMovieList(movieListURL,API_KEY_TAG,API);
+                String moviesListJSON = NetworkUtils.getMovieList(movieListURL, API_KEY_TAG, API);
                 return moviesListJSON;
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;  // todo figure out what to do if this happens
+                return null;  // todo alert user via toast message?
             }
         }
+    }
 
-        // todo remove this? see above...
-        @Override
-        protected void onPostExecute(String moviesListJSON) {
-            try {
-                ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-                mMovies = moviesArrayList;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+    public void setmMovies(String url) {
+        try {
+            String moviesListJSON  = new  FetchMovieListTask().execute(url).get();
+            ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
+            mMovies = moviesArrayList;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,19 +103,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         return true;
     }
 
+    // todo figure out how to save settings
+    // todo figure out why data is not refreshing
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.popular_movies) {
-            new FetchMovieListTask().execute(POPULAR_MOVIES_URL);
-            mAdapter.notifyDataSetChanged();
-            return true;
-        } else if (id == R.id.top_rated_movies) {
-            new FetchMovieListTask().execute(TOP_RATED_MOVIES_URL);
-            mAdapter.notifyDataSetChanged();
-            return true;
-        } else return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.popular_movies:
+                setmMovies(POPULAR_MOVIES_URL);
+                mAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.top_rated_movies:
+                setmMovies(TOP_RATED_MOVIES_URL);
+                mAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
-
 }

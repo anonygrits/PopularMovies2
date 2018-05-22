@@ -3,9 +3,6 @@ package com.example.android.popularmovies1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Movie implements Parcelable {
     // Parcelable pattern taken from http://www.vogella.com/tutorials/AndroidParcelable/article.html
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -83,9 +80,7 @@ public class Movie implements Parcelable {
     }
 
     private String getYearFromDate(String release_date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-        LocalDate localDate = LocalDate.parse(release_date, formatter);
-        String year = Integer.toString(localDate.getYear());
+        String year = release_date.substring(0,4);
         return year;
     }
 

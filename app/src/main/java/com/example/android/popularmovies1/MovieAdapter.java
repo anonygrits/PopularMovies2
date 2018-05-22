@@ -2,7 +2,6 @@ package com.example.android.popularmovies1;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.content.Context;
 import android.view.ViewGroup;
@@ -34,9 +33,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         public MovieViewHolder(View view) {
             super(view);
-            mThumbnailView = view.findViewById(R.id.iv_poster);
+            mThumbnailView = view.findViewById(R.id.movie_grid_item);
             view.setOnClickListener(this);
             }
+
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Movie movie = mMovies.get(adapterPosition);
@@ -61,6 +61,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
+
         ImageView thumbnailView = holder.mThumbnailView;
         String posterURL = NetworkUtils.buildPosterURLString(movie.getPoster_path());
         Picasso.with(thumbnailView.getContext()).load(posterURL).into(thumbnailView);
