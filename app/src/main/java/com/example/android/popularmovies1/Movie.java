@@ -18,7 +18,7 @@ public class Movie implements Parcelable {
     private String mId;
     private String mPoster_path;
     private String mTitle;
-    private String mRelease_year;
+    private String mRelease_date;
     private String mVote_average;
     private String mOverview;
 
@@ -26,7 +26,7 @@ public class Movie implements Parcelable {
         mId = id;
         mPoster_path = poster_path;
         mTitle = title;
-        mRelease_year = getYearFromDate(release_date);
+        mRelease_date = release_date;
         mVote_average = vote_average;
         mOverview = overview;
     }
@@ -55,12 +55,12 @@ public class Movie implements Parcelable {
         return mTitle;
     }
 
-    public void setRelease_year(String release_date) {
-        mRelease_year = getYearFromDate(release_date);
+    public void setRelease_date(String release_date) {
+        mRelease_date = release_date;
     }
 
-    public String getRelease_year() {
-        return mRelease_year;
+    public String getRelease_date() {
+        return mRelease_date;
     }
 
     public void setVote_average(String vote_average) {
@@ -79,16 +79,11 @@ public class Movie implements Parcelable {
         return mOverview;
     }
 
-    private String getYearFromDate(String release_date) {
-        String year = release_date.substring(0,4);
-        return year;
-    }
-
     public Movie(Parcel fromParcel) {
         this.mId = fromParcel.readString();
         this.mPoster_path = fromParcel.readString();
         this.mTitle = fromParcel.readString();
-        this.mRelease_year = fromParcel.readString();
+        this.mRelease_date = fromParcel.readString();
         this.mVote_average = fromParcel.readString();
         this.mOverview = fromParcel.readString();
     }
@@ -98,7 +93,7 @@ public class Movie implements Parcelable {
         toParcel.writeString(this.mId);
         toParcel.writeString(this.mPoster_path);
         toParcel.writeString(this.mTitle);
-        toParcel.writeString(this.mRelease_year);
+        toParcel.writeString(this.mRelease_date);
         toParcel.writeString(this.mVote_average);
         toParcel.writeString(this.mOverview);
     }
@@ -115,7 +110,7 @@ public class Movie implements Parcelable {
                 "id='" + mId + '\'' +
                 ",poster_path='" + mPoster_path + '\'' +
                 ",title='" + mTitle + '\'' +
-                ",release_year='" + mRelease_year + '\'' +
+                ",release_date='" + mRelease_date + '\'' +
                 ",vote_average='" + mVote_average + '\'' +
                 ",overview='" + mOverview + '\'' +
                 '}';

@@ -15,7 +15,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final int DEFAULT_POSITION = -1;
 
     private ImageView mPosterView;
-    private TextView mYearView;
+    private TextView mDateView;
     private TextView mAverageVoteView;
     private TextView mOverviewView;
 
@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         mPosterView = findViewById(R.id.iv_poster);
-        mYearView = findViewById(R.id.tv_year);
+        mDateView = findViewById(R.id.tv_date);
         mAverageVoteView = findViewById(R.id.tv_avgVote);
         mOverviewView = findViewById(R.id.tv_overview);
 
@@ -36,8 +36,7 @@ public class DetailActivity extends AppCompatActivity {
                 Movie movie = intent.getExtras().getParcelable("movie");
 
                 // set views
-                mYearView.setText(movie.getRelease_year());
-                mAverageVoteView.setText(movie.getRelease_year());
+                mDateView.setText(movie.getRelease_date());
                 mAverageVoteView.setText(movie.getVote_average());
                 mOverviewView.setText(movie.getOverview());
 

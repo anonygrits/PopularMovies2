@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Context context = this;
         Class destinationClass = DetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        intentToStartDetailActivity.putExtra("movie",new Movie(movie.getId(),movie.getPoster_path(),movie.getTitle(),movie.getRelease_year(),movie.getVote_average(),movie.getOverview()));
+        intentToStartDetailActivity.putExtra("movie",new Movie(movie.getId(),movie.getPoster_path(),movie.getTitle(),movie.getRelease_date(),movie.getVote_average(),movie.getOverview()));
         startActivity(intentToStartDetailActivity);
     }
 
