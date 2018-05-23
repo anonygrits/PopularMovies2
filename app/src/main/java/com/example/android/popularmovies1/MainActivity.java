@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import org.json.JSONException;
 
+import com.example.android.popularmovies1.Utilities.GridSizeUtils;
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setHasFixedSize(true);
 
         // set up grid layout manager
-        int numberColumns = 2;  // todo make adaptive to screen size
+        int numberColumns = GridSizeUtils.calculateNoOfColumns(getApplicationContext());
         mGridLayoutManager = new GridLayoutManager(this, numberColumns);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
