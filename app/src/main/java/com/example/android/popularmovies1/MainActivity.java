@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         // get movies list (default ordering is by popularity)
+        // note: in future versions, consider setting up local preferences to set default sort option
         // note: tried to put this in onPostExecute() but due to time lag, mMovie was set after recyclerview was set up
         setmMovies(POPULAR_MOVIES_URL);
 
