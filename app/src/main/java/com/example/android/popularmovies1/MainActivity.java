@@ -2,6 +2,8 @@ package com.example.android.popularmovies1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -68,18 +71,32 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         startActivity(intentToStartDetailActivity);
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     public class FetchMovieListTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             if (urls.length == 0) return null;
 
-            String movieListURL = urls[0];
-            try {
-                String moviesListJSON = NetworkUtils.getMovieList(movieListURL, API_KEY_TAG, API);
-                return moviesListJSON;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;  // todo alert user via toast message?
+            // check connection
+            Boolean isOnline = isOnline();
+
+            if (isOnline) {
+                String movieListURL = urls[0];
+                try {
+                    String moviesListJSON = NetworkUtils.getMovieList(movieListURL, API_KEY_TAG, API);
+                    return moviesListJSON;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;  // todo alert user via toast message?
+                }
+            } else {
+                return null;
             }
         }
     }
@@ -87,9 +104,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public void setmMovies(String url) {
         try {
             String moviesListJSON  = new  FetchMovieListTask().execute(url).get();
-            ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-            mMovies.clear();
-            mMovies.addAll(moviesArrayList);
+            if (moviesListJSON != null) {
+                ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
+                mMovies.clear();
+                mMovies.addAll(moviesArrayList);
+            } else {
+                Toast.makeText(this, R.string.no_data_error,Toast.LENGTH_LONG).show();
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
