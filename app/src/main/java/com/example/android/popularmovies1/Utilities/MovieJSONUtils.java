@@ -9,6 +9,7 @@ import com.example.android.popularmovies1.Movie;
 import java.util.ArrayList;
 
 public final class MovieJSONUtils {
+    // make array of Movie objects using json data
     public static ArrayList getMovieArrayList(String movieString) throws JSONException {
         ArrayList<Movie> movieArrayList = new ArrayList<>();
 

@@ -11,9 +11,7 @@ import com.squareup.picasso.Picasso;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {
-    public static final String EXTRA_POSITION = "extra_position";
-    private static final int DEFAULT_POSITION = -1;
-
+    // set up view variables
     private ImageView mPosterView;
     private TextView mDateView;
     private TextView mAverageVoteView;
@@ -24,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        // get references to all views
         mPosterView = findViewById(R.id.iv_poster);
         mDateView = findViewById(R.id.tv_date);
         mAverageVoteView = findViewById(R.id.tv_avgVote);
@@ -40,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
                 mAverageVoteView.setText(movie.getVote_average());
                 mOverviewView.setText(movie.getOverview());
 
-                // todo also in MovieAdapter - figure out where to put this in final code
+                // get poster thumbnail using Picasso
                 String posterURL = NetworkUtils.buildPosterURLString(movie.getPoster_path());
                 Picasso.with(mPosterView.getContext()).load(posterURL).into(mPosterView);
 

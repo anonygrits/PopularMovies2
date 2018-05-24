@@ -4,17 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
-    // Parcelable pattern taken from http://www.vogella.com/tutorials/AndroidParcelable/article.html
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Movie createFromParcel(Parcel fromParcel) {
-            return new Movie(fromParcel);
-        }
-
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-
+    // set up Movie object components
     private String mId;
     private String mPoster_path;
     private String mTitle;
@@ -79,6 +69,18 @@ public class Movie implements Parcelable {
         return mOverview;
     }
 
+    // functions needed to make Movie Parcel
+    // Parcelable pattern taken from http://www.vogella.com/tutorials/AndroidParcelable/article.html
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Movie createFromParcel(Parcel fromParcel) {
+            return new Movie(fromParcel);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
     public Movie(Parcel fromParcel) {
         this.mId = fromParcel.readString();
         this.mPoster_path = fromParcel.readString();
@@ -103,7 +105,6 @@ public class Movie implements Parcelable {
         return 0;
     }
 
-    // todo is this necessary?
     @Override
     public String toString() {
         return "Movie{" +

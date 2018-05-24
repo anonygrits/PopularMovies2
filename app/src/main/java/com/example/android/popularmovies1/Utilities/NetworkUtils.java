@@ -43,7 +43,8 @@ public final class NetworkUtils {
     }
 
     // build thumbnail URL
-    // todo consider if this is best place for this code
+    // note: tried URI builder, but couldn't get it back to string because of implicit formatting of '/' in poster_path
+    // note: there is probably a better place for this code but not sure where...
     private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE="w185";
 

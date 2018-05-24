@@ -9,41 +9,47 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import org.json.JSONException;
-
 import com.example.android.popularmovies1.Utilities.GridSizeUtils;
 import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
 import com.example.android.popularmovies1.Utilities.NetworkUtils;
 
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickHandler {
+    // set up variable to hold movie data
     private ArrayList<Movie> mMovies = new ArrayList<>();
+
+    // set up variables for moviesDB
     private final String POPULAR_MOVIES_URL="https://api.themoviedb.org/3/movie/popular?";
     private final String TOP_RATED_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
 
     private static String API_KEY_TAG="api_key";
 
-    // put private API key here
-    private static String API = "";      // todo remove before committing to github!
+    // todo put private API key here (remove before git commit!)
+    private static String API = "";
 
+
+    // set up components for recyclerview
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
 
+    // set up app when first opened
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // get movies list (default ordering is by popularity)
-        // note: tried to put this in onPostExecute() but could not set mMovie - revisit when time
+        // note: tried to put this in onPostExecute() but due to time lag, mMovie was set after recyclerview was set up
         setmMovies(POPULAR_MOVIES_URL);
 
         // get reference to RecyclerView in xml
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    // used to go from MainActivity to DetailActivity when user clicks on poster
     @Override
     public void onClick(Movie movie) {
         Context context = this;
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    // get movie data asynchronously
     public class FetchMovieListTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -95,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                     return moviesListJSON;
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return null;  // todo alert user via toast message?
+                    return null;
                 }
             } else {
                 return null;
@@ -103,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
     }
 
+    // used to set the movie data
+    // note: would normally do this with onPostExecute(), time lag results in blank screen till next action
     public void setmMovies(String url) {
         try {
             String moviesListJSON  = new  FetchMovieListTask().execute(url).get();
+
+            // check for null result, which could mean that there is no network connection or no internet access
             if (moviesListJSON != null) {
                 ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
                 mMovies.clear();
@@ -122,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
     }
 
+    // sets up menu options for sort ordering
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -129,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         return true;
     }
 
-    // todo figure out how to save settings
+    // changes results shown on screen based on sort ordering choice
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
