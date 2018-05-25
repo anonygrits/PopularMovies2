@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private final String TOP_RATED_MOVIES_URL="https://api.themoviedb.org/3/movie/top_rated?";
 
     private static String API_KEY_TAG="api_key";
-
-    // todo put private API key here (remove before git commit!)
-    private static String API = "";
+    private static String API = BuildConfig.API_KEY;
 
 
     // set up components for recyclerview
