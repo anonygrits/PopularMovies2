@@ -39,6 +39,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         // get movies list (default ordering is by popularity) and set up RecyclerView
+        FetchMovieListTask fetchMovieListTask = getNewFetchMovieTask();
+        fetchMovieListTask.execute(POPULAR_MOVIES_URL);
+
+        // set up RecyclerView
+        setUpRecyclerView();
+    }
+
+    // set up new AsyncTask
+    public FetchMovieListTask getNewFetchMovieTask() {
+        // first define onTaskCompleted to pass to AsnycTask
         final OnTaskCompleted onTaskCompleted = new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(String moviesListJSON) {
@@ -47,29 +57,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                     ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
                     mMovies.clear();
                     mMovies.addAll(moviesArrayList);
-
-                    setUpRecyclerView();
+                    mAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
 
+        // create new AsyncTask and return it
         FetchMovieListTask fetchMovieListTask = new FetchMovieListTask(MainActivity.this, onTaskCompleted);
-        fetchMovieListTask.execute(POPULAR_MOVIES_URL);
+        return fetchMovieListTask;
     }
 
-    // used to go from MainActivity to DetailActivity when user clicks on poster
-    @Override
-    public void onClick(Movie movie) {
-        Context context = this;
-        Class destinationClass = DetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        intentToStartDetailActivity.putExtra("movie", new Movie(movie.getId(), movie.getPoster_path(), movie.getTitle(), movie.getRelease_date(), movie.getVote_average(), movie.getOverview()));
-        startActivity(intentToStartDetailActivity);
-    }
-
-    // process movie data and set up recyclerView
+    // set up recyclerView
     public void setUpRecyclerView() {
         // get reference to RecyclerView in xml
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -87,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    // go from MainActivity to DetailActivity when user clicks on poster
+    @Override
+    public void onClick(Movie movie) {
+        Context context = this;
+        Class destinationClass = DetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        intentToStartDetailActivity.putExtra("movie", new Movie(movie.getId(), movie.getPoster_path(), movie.getTitle(), movie.getRelease_date(), movie.getVote_average(), movie.getOverview()));
+        startActivity(intentToStartDetailActivity);
+    }
+
     // sets up menu options for sort ordering
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,32 +108,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     // changes results shown on screen based on sort ordering choice
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final OnTaskCompleted onTaskCompleted = new OnTaskCompleted() {
-            @Override
-            public void onTaskCompleted(String moviesListJSON) {
-                try {
-                    // set Movies arrayList
-                    ArrayList<Movie> moviesArrayList = MovieJSONUtils.getMovieArrayList(moviesListJSON);
-                    mMovies.clear();
-                    mMovies.addAll(moviesArrayList);
-
-                    setUpRecyclerView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        FetchMovieListTask fetchMovieListTask = new FetchMovieListTask(MainActivity.this, onTaskCompleted);
+        FetchMovieListTask fetchMovieListTask = getNewFetchMovieTask();
 
         switch (item.getItemId()) {
             case R.id.popular_movies:
                 fetchMovieListTask.execute(POPULAR_MOVIES_URL);
-                mAdapter.notifyDataSetChanged();
                 return true;
             case R.id.top_rated_movies:
                 fetchMovieListTask.execute(TOP_RATED_MOVIES_URL);
-                mAdapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
