@@ -1,4 +1,4 @@
-package com.example.android.popularmovies1.Utilities;
+package com.example.android.popularmovies2.Utilities;
 
 import android.net.Uri;
 

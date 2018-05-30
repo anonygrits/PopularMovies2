@@ -1,4 +1,4 @@
-package com.example.android.popularmovies1;
+package com.example.android.popularmovies2;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import com.example.android.popularmovies1.Utilities.NetworkUtils;
+import com.example.android.popularmovies2.Utilities.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {
     // set up view variables

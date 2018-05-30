@@ -1,4 +1,4 @@
-package com.example.android.popularmovies1;
+package com.example.android.popularmovies2;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.android.popularmovies1.Utilities.GridSizeUtils;
-import com.example.android.popularmovies1.Utilities.MovieJSONUtils;
+import com.example.android.popularmovies2.Utilities.GridSizeUtils;
+import com.example.android.popularmovies2.Utilities.MovieJSONUtils;
 
 import org.json.JSONException;
 

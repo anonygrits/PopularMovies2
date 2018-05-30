@@ -1,10 +1,10 @@
-package com.example.android.popularmovies1.Utilities;
+package com.example.android.popularmovies2.Utilities;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.android.popularmovies1.Movie;
+import com.example.android.popularmovies2.Movie;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.android.popularmovies1;
+package com.example.android.popularmovies2;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
-import com.example.android.popularmovies1.Utilities.NetworkUtils;
+import com.example.android.popularmovies2.Utilities.NetworkUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<Movie> mMovies;

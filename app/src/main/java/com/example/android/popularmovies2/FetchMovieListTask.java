@@ -1,4 +1,4 @@
-package com.example.android.popularmovies1;
+package com.example.android.popularmovies2;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.android.popularmovies1.Utilities.NetworkUtils;
+import com.example.android.popularmovies2.Utilities.NetworkUtils;
 
 // separate file for asnycTask
 // method taken from https://xelsoft.wordpress.com/2014/11/28/asynctask-implementation-using-callback-interface/
